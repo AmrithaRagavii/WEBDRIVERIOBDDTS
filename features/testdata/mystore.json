@@ -1,0 +1,21 @@
+{
+    "firstName": "Amritha",
+    "lastName": "Ragavi",
+    "password": "Rag@12",
+    "DOB": {
+        "day": 16,
+        "month": 11,
+        "year": 1997
+    },
+    "Address": {
+        "addressFirstName": "Amritha",
+        "addressLastName": "Ragavi",
+        "address": "mdu",
+        "city": "cbe",
+        "state": "5",
+        "zipcode": "00001",
+        "country": "United States",
+        "mobileNumber": "7854632189",
+        "aliasAddress": "not found"
+    }
+}
