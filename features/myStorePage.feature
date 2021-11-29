@@ -15,13 +15,13 @@ Feature: Create Account in AutomationPractice
     Then I should go the Subcatagories under Women
     When I Click that product to actions to add that into Cart
     Then I should see the message "Product successfully added to your shopping cart"
-    When I click the Proceed to Checkout button
+    When I will click on proceed to Checkout 
     Then I should navigate to the page called "SHOPPING-CART SUMMARY"
     When I click to the Proceed for Checkout
     Then I should navigate the cart for checking the product and address
-    When I click on proceed to Checkout option
+    When I click and proceed to Checkout
     Then I navigate to next page and validate shipping details
-    When I select the check box and proceed to check out
+    When I check the terms and proceed to Checkout button
     Then I should be navigated and validate payments page
     When I click on the payment type button
     Then I should be navigate and validate the bankwire payment page

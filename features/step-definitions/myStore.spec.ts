@@ -63,65 +63,54 @@ Then(/^I should be navigated to another page and can see the text as \"([^\"]*)\
     await expect(myAccountPage.myAccountText).toHaveText(myaccount);
 });
 When(/^I Click Women button$/, async () => {
-    await myAccountPage.clickingOnWomenSection.click()
-    
+    await myAccountPage.clickingOnWomenSection.click();
+
 });
 Then(/^I should go the Subcatagories under Women$/, async () => {
-    await expect(womenSection.womenHeaderElement).toHaveText("WOMEN")
+    await expect(womenSection.womenText).toHaveText("WOMEN")
 
 });
 When(/^I Click that product to actions to add that into Cart$/, async () => {
-    // await womenSection.hoverOnProduct.scrollIntoView()
-    // await womenSection.addToCartButton.click()
-    await womenSection.addToCart()
-
+    await womenSection.hoverOnProduct.scrollIntoView()
+    await womenSection.addToCartButton.click()
 });
 Then(/^I should see the message \"([^\"]*)\"$/, async (productsuccessfullyaddedtoyourshoppingcart) => {
-   // await expect(womenSection.validatingAddToCartText).toHaveText("Product successfully added to your shopping cart")
+    await expect(womenSection.validatingAddToCartText).toHaveText("Product successfully added to your shopping cart")
 });
-When(/^I click the Proceed to Checkout button$/, async () => {
-    //await womenSection.clickOnProceedToCartButton.click()
+When(/^I will click on proceed to Checkout$/, async () => {
+    await womenSection.clickOnProceedToCartButton.click();
 });
 
 Then(/^I should navigate to the page called \"([^\"]*)\"$/, async (shoppingcartsummary) => {
-    await expect(shoppingCartPage.shoppingCartHeader).toHaveTextContaining("SHOPPING-CART SUMMARY")
+    await expect(shoppingCartPage.shoppingCartHeader).toHaveTextContaining(shoppingcartsummary)
     await expect(shoppingCartPage.validatingProductName).toHaveTextContaining("Faded Short Sleeve T-shirts")
     await expect(shoppingCartPage.productTotalPrice).toHaveTextContaining("$")
     await expect(shoppingCartPage.deliveryAddressText).toHaveTextContaining("DELIVERY ADDRESS")
     await expect(shoppingCartPage.invoiceAddressText).toHaveTextContaining("INVOICE ADDRESS")
-
 });
 
 When(/^I click to the Proceed for Checkout$/, async () => {
-    await shoppingCartPage.clickingOnProductProceedToCheckOutButton.click()
+    await shoppingCartPage.clickingOnProductProceedToCheckOutButton.click();
 });
-
-
 Then(/^I should navigate the cart for checking the product and address$/, async () => {
     await expect(addressPage.addressText).toHaveText("ADDRESSES")
     await expect(addressPage.deliveryAddress).toHaveText("YOUR DELIVERY ADDRESS")
     await expect(addressPage.billingAddress).toHaveText("YOUR BILLING ADDRESS")
     await expect(addressPage.ChooseDeliveryOption).toHaveText("Choose a delivery address:")
 });
+When(/^I click and proceed to Checkout$/, async () => {
+    await addressPage.CheckoutButton.click();
 
-
-When(/^I click on proceed to Checkout button$/, async () => {
-    await addressPage.CheckoutButton.click()
-    await addressPage.addressDropDownlist.click()
 });
-When(/^When I click on proceed to Checkout option$/, async()=> {
-    await shoppingCartPage.clickingOnProductProceedToCheckOutButton.click()
-  });
-
-
 Then(/^I navigate to next page and validate shipping details$/, async () => {
     await expect(shipping.shippingText).toHaveText("SHIPPING");
     await expect(shipping.checkBoxTitle).toHaveText("Terms of service")
 });
-When(/^I select the check box and proceed to check out$/, async () => {
-    await shipping.ProceedToCheckOutButton.click();
-    await shipping.selectingCheckbox.click();
+When(/^I check the terms and proceed to Checkout button$/, async () => {
+    await shipping.selectingCheckBox.click()
+    await shipping.ProceedToCheckOutButton.click()
 });
+
 Then(/^I should be navigated and validate payments page$/, async () => {
     await expect(payment.paymentMethodText).toHaveText("PLEASE CHOOSE YOUR PAYMENT METHOD");
 });
@@ -130,11 +119,9 @@ When(/^I click on the payment type button$/, async () => {
 });
 Then(/^I should be navigate and validate the bankwire payment page$/, async () => {
     await expect(payment.orderSummaryText).toHaveText("ORDER SUMMARY")
-    await expect(payment.paymentMethodText).toHaveText("BANK-WIRE PAYMENT.");
 });
 When(/^I click on navigated to I confirm my order$/, async () => {
-    await payment.clickOnPaymentOptionButton.click();
-
+    await payment.clickOnConfirmOderButton.click();
 });
 Then(/^I navigate and validate the order confirmation page$/, async () => {
     await expect(orderConfirmationPage.orderConfirmationHeader).toHaveText("ORDER CONFIRMATION");

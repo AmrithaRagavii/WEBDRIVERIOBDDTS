@@ -5,4 +5,4 @@ class SignInPage {
     get ClickOnCreateAccountButton() { return $("//button[@id='SubmitCreate']"); }
     async homePageLink() { await browser.url("http://automationpractice.com/"); }
 }
-export default new SignInPage
+export default new SignInPage()

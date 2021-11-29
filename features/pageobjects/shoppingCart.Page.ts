@@ -4,6 +4,6 @@ class ShoppingCartSummary {
     get productTotalPrice() { return $('#total_price') }
     get deliveryAddressText() { return $('//li/h3') }
     get invoiceAddressText() { return $('//ul[@class="address last_item alternate_item box"]/li/h3') }
-    get clickingOnProductProceedToCheckOutButton() { return $('.button.btn.btn-default.standard-checkout.button-medium') }
+    get clickingOnProductProceedToCheckOutButton() { return $('//a[@class="button btn btn-default standard-checkout button-medium"]') }
 }
-export default new ShoppingCartSummary
+export default new ShoppingCartSummary()

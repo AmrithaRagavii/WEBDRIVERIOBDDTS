@@ -1,27 +1,8 @@
 class WomenSectionPage {
-    get womenHeaderElement() {
-        return $(".title_block")
-    }
-    get selectedProductElement() {
-        return $("//a[@title='Faded Short Sleeve T-shirts' and @class='product-name']")
-    }
-    get addToCartElement() {
-        return $("//div[@class='right-block']/div[@class='button-container']/a/span[text()='Add to cart']");
-    }
-    async addToCart() {
-        await this.selectedProductElement.scrollIntoView(false);
-        await this.selectedProductElement.moveTo();
-        await this.addToCartElement.click();
-    }
-    get popUpHeader() {
-        return $("//span[@class='cross']/following-sibling::h2");
-    }
-    get proceedToCheeckOutElement() {
-        return $("//a[@title='Proceed to checkout' and @rel='nofollow']")
-    }
-    async clickProceedToCheckout() {
-        await this.proceedToCheeckOutElement.click();
-    }
-
+    get womenText() { return $('.sf-with-ul') }
+    get hoverOnProduct() { return $('//img[@alt="Faded Short Sleeve T-shirts"]') }
+    get addToCartButton() { return $('//a[@data-id-product="1"]') }
+    get validatingAddToCartText() { return $('//h2') }
+    get clickOnProceedToCartButton() { return $('//a[@title="Proceed to checkout"]') }
 }
-export default new WomenSectionPage
+export default new WomenSectionPage()
