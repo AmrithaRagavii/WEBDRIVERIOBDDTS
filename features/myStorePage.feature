@@ -11,3 +11,20 @@ Feature: Create Account in AutomationPractice
     When I enter the data in all fields as
     When I click on the Register Button
     Then I should be navigated to another page and can see the text as "MY ACCOUNT"
+    When I Click Women button
+    Then I should go the Subcatagories under Women
+    When I Click that product to actions to add that into Cart
+    Then I should see the message "Product successfully added to your shopping cart"
+    When I click the Proceed to Checkout button
+    Then I should navigate to the page called "SHOPPING-CART SUMMARY"
+    When I click to the Proceed for Checkout
+    Then I should navigate the cart for checking the product and address
+    When I click on proceed to Checkout option
+    Then I navigate to next page and validate shipping details
+    When I select the check box and proceed to check out
+    Then I should be navigated and validate payments page
+    When I click on the payment type button
+    Then I should be navigate and validate the bankwire payment page
+    When I click on navigated to I confirm my order
+    Then I navigate and validate the order confirmation page
+

@@ -33,4 +33,4 @@ class SignUpPage {
     get aliasAddress() { return $('#alias') }
     get registerButton() { return $('#submitAccount') }
 }
-export default new SignUpPage()
+export default new SignUpPage
