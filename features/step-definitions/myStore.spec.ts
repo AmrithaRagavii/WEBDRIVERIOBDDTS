@@ -1,131 +1,84 @@
-import { Given, Then, When } from "@wdio/cucumber-framework";
+import { Given, When, Then } from "@wdio/cucumber-framework";
+import randomData from "faker";
+import addressPage from "../pageobjects/cart/address.Page";
+import orderConfirmationPage from "../pageobjects/cart/orderConfirmation.Page";
+import paymentPage from "../pageobjects/cart/payment.Page";
+import shippingPage from "../pageobjects/cart/shippingPage";
+import shoppingCartPage from "../pageobjects/cart/shoppingCart.Page";
+import womenSection from "../pageobjects/menu/womenSection";
 import myAccountPage from "../pageobjects/myAccount.Page";
 import signInPage from "../pageobjects/signIn.Page";
-import signUpPage from "../pageobjects/signUp.Page";
-import randomData from "faker";
-import myStore from "../testdata/mystore.json"
-import addressPage from "../pageobjects/address.Page";
-import womenSection from "../pageobjects/womenSection";
-import shoppingCartPage from "../pageobjects/shoppingCart.Page";
-import shipping from "../pageobjects/shipping";
-import orderConfirmationPage from "../pageobjects/orderConfirmation.Page";
-import payment from "../pageobjects/payment";
-
+import signUpPage from "../pageobjects/signup/signUp.Page";
+import signUp from "../testdata/signUp.json";
 Given(/^This is the Home Page of MyStore$/, async () => {
     await signInPage.homePageLink()
 });
-
 When(/^I Click on Sign in$/, async () => {
-    await signInPage.clickOnSIgnIn.click();
+    await signInPage.signIn()
 });
-
 Then(/^I should see the Text as \"([^\"]*)\"$/, async (createanaccount) => {
     await expect(signInPage.createAccountText).toHaveText(createanaccount);
 });
-
 When(/^I enter email address it should create account$/, async () => {
     await signInPage.enteringEmailAddress.setValue(randomData.internet.email())
+    await signInPage.createAccount()
 });
-
-When(/^I click on create an account button$/, async () => {
-    await signInPage.ClickOnCreateAccountButton.click();
-});
-
 Then(/^I should navigate and see the heading as \"([^\"]*)\"$/, async (yourpersonalinformation) => {
     await expect(signUpPage.pageHeading).toHaveText(yourpersonalinformation);
 });
-
 When(/^I enter the data in all fields as$/, async () => {
-
-    await signUpPage.radioButton.isSelected();
-    await signUpPage.firstName.setValue(myStore.firstName);
-    await signUpPage.lastname.setValue(myStore.lastName);
-    await signUpPage.password.setValue(myStore.password);
-    await signUpPage.dobDay.selectByAttribute('value', myStore.DOB.day);
-    await signUpPage.dobMonth.selectByAttribute('value', myStore.DOB.month);
-    await signUpPage.dobYear.selectByAttribute('value', myStore.DOB.year);
-    await signUpPage.addressFirstName.setValue(myStore.Address.addressFirstName);
-    await signUpPage.addressLastName.setValue(myStore.Address.addressLastName);
-    await signUpPage.address.setValue(myStore.Address.address);
-    await signUpPage.city.setValue(myStore.Address.city);
-    await signUpPage.state.selectByAttribute('value', myStore.Address.state);
-    await signUpPage.zipCode.setValue(myStore.Address.zipcode);
-    await signUpPage.country.selectByVisibleText(myStore.Address.country);
-    await signUpPage.mobileNumber.setValue(myStore.Address.mobileNumber);
-    await signUpPage.aliasAddress.setValue(myStore.Address.aliasAddress);
+    await signUpPage.clickRadio();
+    await signUpPage.setFirstAndLastName(signUp.name);
+    await signUpPage.enteringPassword(randomData.internet.password(8));
+    await signUpPage.selectDateOfBirth(signUp.dob);
+    await signUpPage.addressInfo(signUp.address);
+    await signUpPage.setMobileNumber(signUp.mobileNumber)
+    await signUpPage.setAliasAddress(signUp.aliasAddress)
 });
-
 When(/^I click on the Register Button$/, async () => {
-    await signUpPage.registerButton.click();
+    await signUpPage.clickRegister()
 });
-
 Then(/^I should be navigated to another page and can see the text as \"([^\"]*)\"$/, async (myaccount) => {
     await expect(myAccountPage.myAccountText).toHaveText(myaccount);
 });
 When(/^I Click Women button$/, async () => {
-    await myAccountPage.clickingOnWomenSection.click();
-
+    await myAccountPage.womenSectionButton()
 });
-Then(/^I should go the Subcatagories under Women$/, async () => {
-    await expect(womenSection.womenText).toHaveText("WOMEN")
-
+When(/^I Click that product to add that into Cart$/, async () => {
+    await womenSection.selectingProduct()
 });
-When(/^I Click that product to actions to add that into Cart$/, async () => {
-    await womenSection.hoverOnProduct.scrollIntoView()
-    await womenSection.addToCartButton.click()
-});
-Then(/^I should see the message \"([^\"]*)\"$/, async (productsuccessfullyaddedtoyourshoppingcart) => {
-    await expect(womenSection.validatingAddToCartText).toHaveText("Product successfully added to your shopping cart")
+Then(/^I should see the message \"([^\"]*)\"$/, async (productsuccessfullyadded) => {
+    await expect(womenSection.validatingAddToCartText).toHaveText(productsuccessfullyadded)
 });
 When(/^I will click on proceed to Checkout$/, async () => {
-    await womenSection.clickOnProceedToCartButton.click();
+    await womenSection.proceedtoCheckOut()
 });
-
 Then(/^I should navigate to the page called \"([^\"]*)\"$/, async (shoppingcartsummary) => {
     await expect(shoppingCartPage.shoppingCartHeader).toHaveTextContaining(shoppingcartsummary)
-    await expect(shoppingCartPage.validatingProductName).toHaveTextContaining("Faded Short Sleeve T-shirts")
-    await expect(shoppingCartPage.productTotalPrice).toHaveTextContaining("$")
-    await expect(shoppingCartPage.deliveryAddressText).toHaveTextContaining("DELIVERY ADDRESS")
-    await expect(shoppingCartPage.invoiceAddressText).toHaveTextContaining("INVOICE ADDRESS")
 });
-
 When(/^I click to the Proceed for Checkout$/, async () => {
-    await shoppingCartPage.clickingOnProductProceedToCheckOutButton.click();
+    await shoppingCartPage.proceedtoCheck()
 });
-Then(/^I should navigate the cart for checking the product and address$/, async () => {
-    await expect(addressPage.addressText).toHaveText("ADDRESSES")
-    await expect(addressPage.deliveryAddress).toHaveText("YOUR DELIVERY ADDRESS")
-    await expect(addressPage.billingAddress).toHaveText("YOUR BILLING ADDRESS")
-    await expect(addressPage.ChooseDeliveryOption).toHaveText("Choose a delivery address:")
+Then(/^I should navigate and validate the address page \"([^\"]*)\"$/, async (addresses) => {
+    await expect(addressPage.addressText).toHaveText(addresses)
 });
 When(/^I click and proceed to Checkout$/, async () => {
-    await addressPage.CheckoutButton.click();
-
+    await addressPage.checkingout()
 });
-Then(/^I navigate to next page and validate shipping details$/, async () => {
-    await expect(shipping.shippingText).toHaveText("SHIPPING");
-    await expect(shipping.checkBoxTitle).toHaveText("Terms of service")
+Then(/^I navigate to next page and validate shipping details \"([^\"]*)\"$/, async (shipping) => {
+    await expect(shippingPage.shippingText).toHaveText(shipping);
 });
 When(/^I check the terms and proceed to Checkout button$/, async () => {
-    await shipping.selectingCheckBox.click()
-    await shipping.ProceedToCheckOutButton.click()
+    await shippingPage.clickCheckBox()
+    await shippingPage.ProceedtoCart()
 });
-
-Then(/^I should be navigated and validate payments page$/, async () => {
-    await expect(payment.paymentMethodText).toHaveText("PLEASE CHOOSE YOUR PAYMENT METHOD");
+Then(/^I should validate payments page \"([^\"]*)\"$/, async (paymentmethod) => {
+    await expect(paymentPage.paymentMethodText).toHaveText(paymentmethod);
 });
-When(/^I click on the payment type button$/, async () => {
-    await payment.clickOnPaymentOptionButton.click();
+When(/^I Choose payment type and click Confirm Order$/, async () => {
+    await paymentPage.paymentOptions();
+    await paymentPage.confirmOrder();
 });
-Then(/^I should be navigate and validate the bankwire payment page$/, async () => {
-    await expect(payment.orderSummaryText).toHaveText("ORDER SUMMARY")
+Then(/^I navigate and see the Header as \"([^\"]*)\"$/, async (orderconfirmation) => {
+    await expect(orderConfirmationPage.orderConfirmationHeader).toHaveText(orderconfirmation);
 });
-When(/^I click on navigated to I confirm my order$/, async () => {
-    await payment.clickOnConfirmOderButton.click();
-});
-Then(/^I navigate and validate the order confirmation page$/, async () => {
-    await expect(orderConfirmationPage.orderConfirmationHeader).toHaveText("ORDER CONFIRMATION");
-    await expect(orderConfirmationPage.orderConfirmationDetails).toHaveText("Your order on My Store is complete.")
-});
-
-
